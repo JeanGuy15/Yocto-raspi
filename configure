@@ -1,0 +1,32 @@
+#! /bin/bash
+
+
+MAIN_DIR=$PWD
+declare -a DEP=('gawk' 'wget' 'git-core' 'diffstat' 'unzip' 'texinfo' 'gcc-multilib' 'build-essential' 'chrpath' 'socat' 'libsdl1.2-dev' 'xterm' 'make' 'xsltproc' 'docbook-utils' 'fop' 'dblatex' 'xmlto' 'autoconf' 'automake' 'libtool' 'libglib2.0-dev' 'python-gtk2' 'bsdmainutils' 'screen');
+#DEP= "gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm make xsltproc docbook-utils fop dblatex xmlto autoconf automake libtool libglib2.0-dev python-gtk2 bsdmainutils screen"
+CMD="install"
+
+
+if [ "$1" == "clean" ]; then
+echo -e 'Clean build repository'
+echo -e 'Clean git repository'
+exit 
+fi
+
+if [ "$1" == "purge" ]; then
+$CMD="purge"
+fi
+
+echo "number of dependency to install " ${#DEP[@]}
+index=1
+  
+for element in "${DEP[@]}"
+do   
+        echo $CMD"	["$index"/" ${#DEP[@]} "]=	" $element
+        sudo apt-get -y $CMD $element
+       $index = $index+1
+done
+echo $index
+sudo install -o $(id -u) -g $(id -g) -d /opt/yocto
+cd /opt/yocto
+git clone --branch pyro git://git.yoctoproject.org/poky
