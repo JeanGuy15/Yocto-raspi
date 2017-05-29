@@ -3,18 +3,17 @@
 
 MAIN_DIR=$PWD
 declare -a DEP=('gawk' 'wget' 'git-core' 'diffstat' 'unzip' 'texinfo' 'gcc-multilib' 'build-essential' 'chrpath' 'socat' 'libsdl1.2-dev' 'xterm' 'make' 'xsltproc' 'docbook-utils' 'fop' 'dblatex' 'xmlto' 'autoconf' 'automake' 'libtool' 'libglib2.0-dev' 'python-gtk2' 'bsdmainutils' 'screen');
-CMD="install"
 BUILD_PATH="/opt/yocto"
 
 
 if [ "$1" == "clean" ]; then
-$CMD="clean"
+CMD="clean"
 elif [ "$1" == "remove" ]; then
-$CMD="remove"
+CMD="remove"
 elif [ "$1" == "purge" ]; then
-$CMD="purge"
+CMD="purge"
 else
-$CMD="install"
+CMD="install"
 fi
 
 echo "number of dependency to " $CMD ":" ${#DEP[@]}
@@ -24,10 +23,9 @@ for element in "${DEP[@]}"
 do   
         echo $CMD"	["$index"/" ${#DEP[@]} "]=	" $element
         sudo apt-get -y $CMD $element
-       $index = $index+1
 done
 
-if["$CMD"=="install"];then
+if [ "$CMD" == "install" ];then
 sudo install -o $(id -u) -g $(id -g) -d $BUILD_PATH
 cd $BUILD_PATH
 git clone --branch pyro git://git.yoctoproject.org/poky

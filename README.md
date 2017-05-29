@@ -9,8 +9,7 @@
 #                                                        |_|      
 #----------------------------------------------------------------------------------
 
-
-https://github.com/JeanGuy15/Yocto-raspi.git
+git clone https://github.com/JeanGuy15/Yocto-raspi.git
 
 
 Summary
